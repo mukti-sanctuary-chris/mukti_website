@@ -1,12 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import {
-  Backpack,
-  HandHeart,
-  Megaphone,
-  ShoppingBag,
-  Sprout,
-} from "lucide-react";
+import { Backpack, HandHeart, Megaphone, Sprout } from "lucide-react";
 
 import { SectionHeading } from "@/components/ui/section-heading";
 import { Button } from "@/components/ui/button";
@@ -35,13 +29,8 @@ const options = [
       "Hay, feed, bedding, and veterinary supplies are always needed. Reach out for our current wishlist and drop-off details.",
     action: { label: "Request the wishlist", href: `mailto:${siteConfig.email}` },
   },
-  {
-    icon: ShoppingBag,
-    title: "Shop our merchandise",
-    description:
-      "Every purchase from our merch shop funds daily animal care, with proceeds going directly to the sanctuary rather than a third-party platform.",
-    action: { label: "Visit the shop", href: "#" },
-  },
+  // Merch card removed for now — re-add once there's a real shop link to
+  // point it at (see GitHub issue #5).
 ];
 
 export const metadata: Metadata = {

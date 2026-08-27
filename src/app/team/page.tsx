@@ -57,7 +57,7 @@ export default function TeamPage() {
                   <Button asChild size="sm" variant="secondary" className="mt-1">
                     <Link href="/#donate">
                       <ShieldCheck className="h-4 w-4" />
-                      Become their Guardian
+                      Support monthly
                     </Link>
                   </Button>
                 ) : null}

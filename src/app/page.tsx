@@ -1,15 +1,11 @@
 import Link from "next/link";
-import { ArrowRight, HandHeart, ShieldCheck, Sprout } from "lucide-react";
+import { ArrowRight, HandHeart, Sprout } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { PlaceholderImage } from "@/components/placeholder-image";
 import { DonatePanel } from "@/components/donate-panel";
-import { Card, CardContent } from "@/components/ui/card";
-import { animals } from "@/lib/data/animals";
 import { siteConfig } from "@/lib/data/site-config";
-
-const guardianAnimals = animals.filter((a) => a.status === "sponsorable");
 
 export default function Home() {
   return (
@@ -47,62 +43,53 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Mission and Vision — copy sourced from muktisanctuary.com's own
+          "Mission and Vision" section, lightly tightened. See issue #8. */}
+      <section className="mx-auto max-w-4xl px-6 py-16 text-center">
+        <h2 className="font-serif text-3xl">Mission and Vision</h2>
+        <div className="mt-6 flex flex-col gap-4 text-lg leading-relaxed text-muted-foreground">
+          <p>
+            For animals, we provide rescue, shelter, medical care,
+            rehabilitation, and the opportunity to live with dignity — from
+            dogs and cats to pigeons, farm animals, and other creatures in
+            need. We promote responsible adoption, veterinary assistance,
+            and TNR (trap-neuter-return) campaigns, while educating and
+            supporting caretakers to ensure long-term animal welfare.
+          </p>
+          <p>
+            For people, we believe rescue and healing extend beyond
+            animals. Join us as a volunteer, a donor, or simply a visitor —
+            there&apos;s a place for you in this work too.
+          </p>
+        </div>
+      </section>
+
       {/* Donation CTA */}
       <section className="border-y border-border bg-muted/40">
         <div className="mx-auto max-w-6xl px-6 py-16">
           <SectionHeading
             eyebrow="Support the sanctuary"
             title="Your donation goes straight to animal care"
-            description="We process donations through Stripe and Zeffy with zero platform fees, and accept direct bank transfers for donors in the EU."
+            description="Help us secure permanent land, sponsor a resident monthly, or send a direct bank transfer — every option reaches the sanctuary with minimal fees."
             className="mb-10"
           />
           <DonatePanel />
         </div>
       </section>
 
-      {/* Guardian section */}
-      <section className="mx-auto max-w-6xl px-6 py-20">
+      {/* Meet the residents teaser */}
+      <section className="mx-auto max-w-6xl px-6 py-20 text-center">
         <SectionHeading
-          eyebrow="The Guardian Program"
-          title="Become a Guardian for one of our animals"
-          description="Guardians provide monthly support for a specific resident's food, medical care, and enrichment — and get regular updates on their progress."
-          className="mb-10"
+          eyebrow="Every rescue has a name"
+          title="Meet the residents"
+          description="From dogs and cats to pigeons and farm animals — every resident at Mukti has a story, a name, and ongoing care needs. Get to know them, and the humans who look after them."
+          className="mx-auto mb-8 max-w-2xl"
         />
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {guardianAnimals.map((animal) => (
-            <Card key={animal.slug} className="overflow-hidden">
-              <PlaceholderImage
-                label={animal.name}
-                color={animal.color}
-                className="aspect-square w-full rounded-none"
-              />
-              <CardContent className="flex flex-col gap-2 pt-5">
-                <div className="flex items-baseline justify-between">
-                  <h3 className="font-serif text-lg">{animal.name}</h3>
-                  <span className="text-xs uppercase tracking-wide text-muted-foreground">
-                    {animal.species}
-                  </span>
-                </div>
-                <p className="line-clamp-3 text-sm text-muted-foreground">
-                  {animal.bio}
-                </p>
-                <Button asChild size="sm" variant="secondary" className="mt-2">
-                  <Link href="#donate">
-                    <ShieldCheck className="h-4 w-4" />
-                    Become their Guardian
-                  </Link>
-                </Button>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-        <div className="mt-8 text-center">
-          <Button asChild variant="ghost">
-            <Link href="/team">
-              Meet every animal <ArrowRight className="h-4 w-4" />
-            </Link>
-          </Button>
-        </div>
+        <Button asChild size="lg">
+          <Link href="/team">
+            Meet every animal <ArrowRight className="h-4 w-4" />
+          </Link>
+        </Button>
       </section>
 
       {/* Other ways to help teaser */}

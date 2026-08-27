@@ -5,10 +5,12 @@ import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { siteConfig } from "@/lib/data/site-config";
 
-// Fonts: this scaffold ships with a system font stack (defined in
-// globals.css) so the build never depends on reaching Google Fonts. Swap in
-// next/font/google (e.g. Inter + Fraunces) or next/font/local with the
-// sanctuary's own brand fonts once one is chosen — see README.
+// Fonts: Aleo (body) + Figtree (headings) — matches the real
+// muktisanctuary.com site (captured via computed styles, see GitHub issue
+// #8). Loaded as a plain <link> rather than next/font/google so the build
+// never depends on reaching Google Fonts at build time (only the browser
+// fetches it, at runtime); globals.css has full system-font fallbacks in
+// case the request is blocked or slow.
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
@@ -35,6 +37,18 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="en" className="h-full antialiased">
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link
+          rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossOrigin="anonymous"
+        />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Aleo:ital,wght@0,400;0,700;1,400&family=Figtree:wght@400;600;700&display=swap"
+          rel="stylesheet"
+        />
+      </head>
       <body className="flex min-h-full flex-col bg-background text-foreground">
         <SiteHeader />
         <main className="flex-1">{children}</main>

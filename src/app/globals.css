@@ -1,23 +1,28 @@
 @import "tailwindcss";
 
 :root {
-  /* Sanctuary palette — warm, earthy, calm. Swap these for final brand values. */
-  --background: #faf7f1;
-  --foreground: #23261f;
-  --muted: #efe9dc;
-  --muted-foreground: #5c5c50;
+  /* Sanctuary palette — pulled from the real muktisanctuary.com's computed
+     styles (sage background, near-black text, dark teal accent bar). See
+     GitHub issue #8. Card/border tones are derived, not measured, since
+     the live site doesn't use a card-based layout. */
+  --background: #9cbcba;     /* sage green — real site's body background */
+  --foreground: #29363c;     /* near-black body text as it actually renders
+                                 over the sage background (source is
+                                 rgba(2,9,18,.75)) */
+  --muted: #b7d2cf;          /* lighter sage, for muted panels */
+  --muted-foreground: #4a5c5a;
   --card: #ffffff;
-  --card-foreground: #23261f;
-  --border: #e4ddca;
+  --card-foreground: #1a2530;
+  --border: #7fa6a2;
 
-  --primary: #2f4a3c;        /* deep forest green */
-  --primary-foreground: #faf7f1;
-  --secondary: #c97b4a;      /* warm terracotta */
+  --primary: #3a6b62;        /* dark teal — real site's announcement bar */
+  --primary-foreground: #ffffff;
+  --secondary: #2f4a3c;      /* deeper forest green, same family */
   --secondary-foreground: #ffffff;
-  --accent: #d9a441;         /* golden amber */
-  --accent-foreground: #23261f;
+  --accent: #c7dad8;         /* soft sage tint for small badges/highlights */
+  --accent-foreground: #1a2530;
 
-  --ring: #2f4a3c;
+  --ring: #3a6b62;
   --radius: 1rem;
 }
 
@@ -40,9 +45,12 @@
   --radius-md: calc(var(--radius) - 4px);
   --radius-sm: calc(var(--radius) - 8px);
 
-  --font-sans: "Inter", "Segoe UI", system-ui, -apple-system, sans-serif;
-  --font-serif: "Fraunces", "Iowan Old Style", "Palatino Linotype", Georgia,
-    serif;
+  /* Body copy uses Aleo (a serif), headings use Figtree (a sans) — matches
+     the real site exactly, even though that reverses the usual naming. The
+     `font-serif` utility class is used throughout the codebase for
+     headings, so its value points at Figtree rather than being renamed. */
+  --font-sans: "Aleo", Georgia, "Iowan Old Style", "Palatino Linotype", serif;
+  --font-serif: "Figtree", "Segoe UI", system-ui, -apple-system, sans-serif;
 }
 
 body {
