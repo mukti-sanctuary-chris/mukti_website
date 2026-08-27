@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Check, Copy, Heart, Landmark, Repeat } from "lucide-react";
+import { Check, Copy, Home, Landmark, PawPrint } from "lucide-react";
 
 import { siteConfig } from "@/lib/data/site-config";
 import { Button } from "@/components/ui/button";
@@ -55,37 +55,62 @@ export function DonatePanel({ className }: { className?: string }) {
   const { donation } = siteConfig;
 
   return (
-    <div id="donate" className={cn("grid gap-6 md:grid-cols-2", className)}>
-      <Card className="flex flex-col justify-between">
+    <div id="donate" className={cn("flex flex-col gap-6", className)}>
+      {/* Primary: the land fund */}
+      <Card className="border-secondary/40 bg-secondary/5">
         <CardHeader>
           <div className="flex items-center gap-2 text-secondary">
-            <Heart className="h-5 w-5" />
-            <CardTitle>Give a donation</CardTitle>
+            <Home className="h-5 w-5" />
+            <CardTitle>Help us buy our forever home</CardTitle>
           </div>
           <CardDescription>
-            Processed with 0% platform fees via Stripe and Zeffy — every
-            euro goes to animal care, not transaction costs.
+            We&apos;ve outgrown our temporary space and are raising funds for
+            the down payment on permanent land in the Greater Lisbon area —
+            with room for every animal who needs us. Follow live progress on
+            GoFundMe.
           </CardDescription>
         </CardHeader>
-        <CardContent className="flex flex-col gap-3">
-          <Button asChild size="lg" className="w-full">
-            <a href={donation.stripeOneTimeLink}>Give once</a>
-          </Button>
-          <Button asChild size="lg" variant="outline" className="w-full">
-            <a href={donation.stripeMonthlyLink}>
-              <Repeat className="h-4 w-4" />
-              Become a monthly sponsor
+        <CardContent>
+          <Button asChild size="lg">
+            <a href={donation.gofundmeLink} target="_blank" rel="noreferrer">
+              Give to the land fund on GoFundMe
             </a>
           </Button>
-          <a
-            href={donation.zeffyLink}
-            className="text-center text-sm text-muted-foreground underline underline-offset-4 hover:text-foreground"
-          >
-            Prefer Zeffy? Donate there instead
-          </a>
         </CardContent>
       </Card>
 
+      {/* Monthly sponsorship tiers */}
+      <div className="grid gap-6 md:grid-cols-2">
+        {donation.sponsorshipTiers.map((tier) => (
+          <Card key={tier.label} className="flex flex-col justify-between">
+            <CardHeader>
+              <div className="flex items-center gap-2 text-secondary">
+                <PawPrint className="h-5 w-5" />
+                <CardTitle>{tier.label}</CardTitle>
+              </div>
+              <CardDescription>
+                Give monthly toward food, medical care, and daily
+                enrichment.
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="flex flex-wrap gap-2">
+              {tier.amounts.map((tierAmount) => (
+                <Button key={tierAmount.href} asChild variant="outline">
+                  <a
+                    href={tierAmount.href}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    {tierAmount.amount}
+                  </a>
+                </Button>
+              ))}
+            </CardContent>
+          </Card>
+        ))}
+      </div>
+
+      {/* Direct bank transfer */}
       <Card className="flex flex-col justify-between">
         <CardHeader>
           <div className="flex items-center gap-2 text-secondary">
@@ -94,10 +119,10 @@ export function DonatePanel({ className }: { className?: string }) {
           </div>
           <CardDescription>
             For donors in Portugal and the EU, a direct SEPA transfer sends
-            100% of your gift with no intermediary at all.
+            your gift with no intermediary at all.
           </CardDescription>
         </CardHeader>
-        <CardContent className="flex flex-col gap-2">
+        <CardContent className="grid gap-2 sm:grid-cols-3">
           <CopyableField
             label="Account name"
             value={donation.bank.accountName}

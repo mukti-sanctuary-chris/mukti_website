@@ -22,6 +22,15 @@ export default function InMemoryPage() {
       </section>
 
       <section className="mx-auto max-w-4xl px-6 py-12 pb-24">
+        {memorials.length === 0 ? (
+          <div className="rounded-2xl border border-dashed border-border bg-muted/40 px-8 py-16 text-center text-muted-foreground">
+            This page is ready for real tributes — add entries to{" "}
+            <code className="rounded bg-muted px-1.5 py-0.5 text-sm">
+              src/lib/data/memorials.ts
+            </code>{" "}
+            once the sanctuary shares them.
+          </div>
+        ) : null}
         <div className="flex flex-col divide-y divide-border">
           {memorials.map((memorial) => (
             <div

@@ -1,22 +1,24 @@
 # Mukti Sanctuary — Website
 
-Custom Next.js site replacing the Shopify store, built for speed, a
-refined visual identity, and zero-fee donation processing.
-
-This is a **scaffold**: every page is real and production-buildable, but
-copy, photography, and payment links are placeholders. The checklist below
-is everything left to make it launch-ready.
+Custom Next.js site replacing the Shopify store at muktisanctuary.com,
+built for speed, a real donation flow, and no recurring SaaS fees.
 
 ## Stack
 
 - **Framework**: Next.js 16 (App Router, TypeScript, Turbopack)
 - **Styling**: Tailwind CSS v4 + hand-rolled shadcn/ui-style primitives
   (`src/components/ui`)
-- **Motion**: Framer Motion is installed and ready for page transitions /
-  scroll reveals (not yet wired into the placeholder pages — add it where
-  it earns its keep)
+- **Fonts**: Aleo (body) + Figtree (headings), matched to the real
+  muktisanctuary.com's computed styles, loaded via a `<link>` to Google
+  Fonts in `src/app/layout.tsx` (not `next/font/google`, so the build
+  never depends on reaching Google Fonts) — see `src/app/globals.css` for
+  full system-font fallbacks.
 - **Content**: typed static data in `src/lib/data/*` — structured to map
-  directly onto Supabase tables later (see below)
+  directly onto Supabase tables later (see below). Supabase itself is
+  deliberately not wired in yet; there's no non-technical content-editing
+  need that justifies the added complexity so far.
+- **Payments**: GoFundMe (land-fund campaign) + Stripe Payment Links
+  (monthly sponsorship tiers) — no in-house payment processing.
 - **Icons**: `lucide-react` (note: this major version dropped brand
   logos like Instagram/Facebook; those live as small inline SVGs in
   `src/components/icons/social.tsx`)
@@ -40,42 +42,37 @@ npm run lint    # eslint
 
 | Route | Purpose |
 |---|---|
-| `/` | Home — hero, donation CTA (Stripe + IBAN), Guardian sponsorship section |
-| `/team` | Meet the Team — animal residents + human staff |
-| `/ways-to-help` | Non-monetary ways to help (volunteer, share, wishlist, merch) |
-| `/in-memory` | Memorial page for animals who have passed |
+| `/` | Home — hero, donation CTA (GoFundMe + Stripe tiers + bank transfer), residents teaser |
+| `/team` | Meet the Team — the real animal residents + human staff (Beth Crivelli, Lynsey Clayton) |
+| `/ways-to-help` | Non-monetary ways to help (volunteer, share, wishlist) |
+| `/in-memory` | Memorial page for animals who have passed — intentionally empty until the sanctuary shares real tributes |
 
-## What to plug in before launch
+## Content layer
 
-1. **Photography** — every image is a `PlaceholderImage` gradient swatch
-   (`src/components/placeholder-image.tsx`). Drop real photos into
-   `/public`, swap each `PlaceholderImage` for `next/image`, and remove
-   the component once it's unused.
-2. **Real content** — edit `src/lib/data/animals.ts`,
-   `src/lib/data/memorials.ts`, and `src/lib/data/site-config.ts` with
-   the sanctuary's actual animals, team bios, and org details.
-3. **Donation links** — `src/lib/data/site-config.ts` → `donation`:
-   - `stripeOneTimeLink` / `stripeMonthlyLink`: create Stripe Payment
-     Links from the Stripe Dashboard (Product catalog → Payment links).
-     Stripe doesn't charge platform fees on top of standard card
-     processing for non-profits the way marketplaces like Shopify do —
-     confirm current rates at stripe.com/pricing.
-   - `zeffyLink`: Zeffy is purpose-built for non-profits and charges
-     literally 0% (donors are prompted to add an optional tip that
-     covers Zeffy's costs). Create a donation form in the Zeffy
-     dashboard and paste the URL here.
-   - `bank.iban` / `bank.bic` / `bank.accountName`: the sanctuary's real
-     IBAN for direct SEPA transfers.
-4. **Domain & fonts** — the scaffold ships on system fonts so the build
-   never depends on reaching Google Fonts (useful in sandboxed CI). Once
-   you're building somewhere with network access, you can restore
-   `next/font/google` (Inter + Fraunces are already referenced as the
-   intended pairing in `globals.css`) or self-host with `next/font/local`
-   for the best of both — no runtime font request, real Google fonts.
-5. **Analytics / SEO** — `metadataBase` in `src/app/layout.tsx` and the
-   `url` in `site-config.ts` are set to `https://muktisanctuary.com`;
-   confirm that's the final domain. `sitemap.ts` and `robots.ts` are
-   already wired up.
+- `src/lib/data/site-config.ts` — org-level facts: name, tagline, socials,
+  nav, and the `donation` block (GoFundMe link, Stripe sponsorship tiers,
+  bank transfer details).
+- `src/lib/data/animals.ts` — the real resident roster and human team,
+  sourced from the current live site's "Meet The Team!" page.
+- `src/lib/data/memorials.ts` — empty on purpose; this is a memorial page
+  for real animals, so no content was invented for it.
+
+Every image is still a `PlaceholderImage` gradient swatch
+(`src/components/placeholder-image.tsx`) pending real photography.
+
+## Known gaps (tracked as GitHub issues)
+
+- **#1** — real bios for the founders (Beth & Lynsey), plus confirm the
+  spelling of "Lynsey"
+- **#3** — real photography to replace the `PlaceholderImage` swatches
+- **#4** — the sanctuary's real bank IBAN / BIC (`site-config.ts` still
+  has placeholders)
+- **#6** — real In Memory tributes, once the sanctuary is ready to share
+  them
+
+Only close one of these issues when the underlying thing is actually
+done — if it's blocked on info only the sanctuary has, leave it open with
+a comment explaining the blocker rather than closing it as "deferred."
 
 ## Content layer → Supabase migration path
 
@@ -86,37 +83,27 @@ move to Supabase later:
    `Memorial` types (see each file).
 2. Replace the static export with a Supabase query (e.g. in a Server
    Component: `const { data } = await supabase.from("animals").select()`).
-3. Components (`AnimalCard`, the grids on `/team` and `/`) don't need to
-   change — they consume the same shape either way.
+3. Components (the grids on `/team` and `/`) don't need to change — they
+   consume the same shape either way.
 
 This keeps the site fully static and free to host today, with a clear
 upgrade path once content updates need to happen without a redeploy.
 
 ## Performance & SEO notes
 
-- Every route in this scaffold prerenders to static HTML
-  (`npm run build` shows `○ (Static)` for all pages) — this is the
-  biggest lever for the mobile PageSpeed score the current Shopify site
-  is missing.
+- Every route in this site prerenders to static HTML (`npm run build`
+  shows `○ (Static)` for all pages) — this is the biggest lever for the
+  mobile PageSpeed score the old Shopify site was missing.
 - No client-side JS ships beyond small interactive islands (`"use client"`
-  is only on the nav toggle and the copy-to-clipboard IBAN fields).
-- Once real photos are added, serve them through `next/image` (already
-  used for the pattern — just swap `PlaceholderImage`) so they're
+  is only on the copy-to-clipboard IBAN fields).
+- Once real photos are added, serve them through `next/image` so they're
   automatically resized, lazy-loaded, and served as modern formats.
-- Re-run https://pagespeed.web.dev against the deployed preview before
-  launch and address anything it flags — the biggest wins for a Shopify
-  → static-Next.js migration are almost always image weight and
-  render-blocking third-party scripts, both of which this scaffold
-  avoids by default.
+- Re-run https://pagespeed.web.dev against the deployed site and address
+  anything it flags — the biggest wins for a Shopify → static-Next.js
+  migration are almost always image weight and render-blocking
+  third-party scripts, both of which this site avoids by default.
 
 ## Deployment
 
-Either Vercel or Cloudflare Pages will work well; Vercel has the
-simplest zero-config path for Next.js:
-
-```bash
-npx vercel
-```
-
-Connect the GitHub repo in the Vercel dashboard for automatic deploys on
-every push to `main`.
+Deployed on Vercel, connected to this GitHub repo for automatic deploys
+on every push to `main`. Domain: `muktisanctuary.com`.
