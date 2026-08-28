@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { Mail, PawPrint } from "lucide-react";
+import Image from "next/image";
+import { Mail } from "lucide-react";
 
 import { siteConfig } from "@/lib/data/site-config";
 import { InstagramIcon, FacebookIcon } from "@/components/icons/social";
@@ -10,7 +11,13 @@ export function SiteFooter() {
       <div className="mx-auto grid max-w-6xl gap-10 px-6 py-14 sm:grid-cols-3">
         <div className="flex flex-col gap-3">
           <span className="flex items-center gap-2 font-serif text-lg">
-            <PawPrint className="h-5 w-5 text-secondary" aria-hidden />
+            <Image
+              src="/brand/mukti-logo.png"
+              alt=""
+              width={28}
+              height={28}
+              className="h-7 w-7"
+            />
             {siteConfig.name}
           </span>
           <p className="max-w-xs text-sm text-muted-foreground">

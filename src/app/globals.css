@@ -1,10 +1,13 @@
 @import "tailwindcss";
 
 :root {
-  /* Sanctuary palette — pulled from the real muktisanctuary.com's computed
-     styles (sage background, near-black text, dark teal accent bar). See
-     GitHub issue #8. Card/border tones are derived, not measured, since
-     the live site doesn't use a card-based layout. */
+  /* Sanctuary palette — pulled from the real muktisanctuary.com: sage
+     background + near-black text measured from computed styles, dark teal
+     from the site's announcement bar, and terracotta orange sampled
+     directly from the real logo (public/brand/mukti-logo.png), which
+     uses it for every animal icon. See GitHub issue #8. Card/border
+     tones are derived, not measured, since the live site doesn't use a
+     card-based layout. */
   --background: #9cbcba;     /* sage green — real site's body background */
   --foreground: #29363c;     /* near-black body text as it actually renders
                                  over the sage background (source is
@@ -17,10 +20,13 @@
 
   --primary: #3a6b62;        /* dark teal — real site's announcement bar */
   --primary-foreground: #ffffff;
-  --secondary: #2f4a3c;      /* deeper forest green, same family */
+  --secondary: #c2703d;      /* terracotta orange, sampled from the real
+                                 logo (deepened slightly from the raw
+                                 sample for text contrast) */
   --secondary-foreground: #ffffff;
-  --accent: #c7dad8;         /* soft sage tint for small badges/highlights */
-  --accent-foreground: #1a2530;
+  --accent: #f0cba8;         /* soft tint of the same terracotta, for
+                                 badges/highlights */
+  --accent-foreground: #402714;
 
   --ring: #3a6b62;
   --radius: 1rem;

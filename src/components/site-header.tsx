@@ -1,8 +1,9 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useState } from "react";
-import { Menu, X, PawPrint } from "lucide-react";
+import { Menu, X } from "lucide-react";
 
 import { siteConfig } from "@/lib/data/site-config";
 import { Button } from "@/components/ui/button";
@@ -14,7 +15,14 @@ export function SiteHeader() {
     <header className="sticky top-0 z-50 border-b border-border bg-background/90 backdrop-blur">
       <div className="mx-auto flex h-18 max-w-6xl items-center justify-between px-6 py-4">
         <Link href="/" className="flex items-center gap-2 font-serif text-xl">
-          <PawPrint className="h-6 w-6 text-secondary" aria-hidden />
+          <Image
+            src="/brand/mukti-logo.png"
+            alt=""
+            width={36}
+            height={36}
+            className="h-9 w-9"
+            priority
+          />
           {siteConfig.name}
         </Link>
 
