@@ -3,7 +3,11 @@ import Image from "next/image";
 import { Mail } from "lucide-react";
 
 import { siteConfig } from "@/lib/data/site-config";
-import { InstagramIcon, FacebookIcon } from "@/components/icons/social";
+import {
+  InstagramIcon,
+  FacebookIcon,
+  YouTubeIcon,
+} from "@/components/icons/social";
 
 export function SiteFooter() {
   return (
@@ -65,9 +69,35 @@ export function SiteFooter() {
             >
               <FacebookIcon className="h-5 w-5" />
             </a>
+            <a
+              href={siteConfig.social.youtube}
+              aria-label="YouTube"
+              className="text-foreground/70 hover:text-foreground"
+            >
+              <YouTubeIcon className="h-5 w-5" />
+            </a>
           </div>
         </div>
       </div>
+
+      {siteConfig.press.length > 0 ? (
+        <div className="border-t border-border px-6 py-6 text-center text-xs text-muted-foreground">
+          As featured in{" "}
+          {siteConfig.press.map((item, i) => (
+            <span key={item.href}>
+              <a
+                href={item.href}
+                target="_blank"
+                rel="noreferrer"
+                className="underline underline-offset-2 hover:text-foreground"
+              >
+                {item.outlet}
+              </a>
+              {i < siteConfig.press.length - 1 ? ", " : ""}
+            </span>
+          ))}
+        </div>
+      ) : null}
 
       <div className="border-t border-border px-6 py-6 text-center text-xs text-muted-foreground">
         © {new Date().getFullYear()} {siteConfig.legalName}. All rights

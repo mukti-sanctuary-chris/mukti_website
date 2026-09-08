@@ -70,10 +70,15 @@ export function DonatePanel({ className }: { className?: string }) {
             GoFundMe.
           </CardDescription>
         </CardHeader>
-        <CardContent>
+        <CardContent className="flex flex-wrap gap-3">
           <Button asChild size="lg">
             <a href={donation.gofundmeLink} target="_blank" rel="noreferrer">
               Give to the land fund on GoFundMe
+            </a>
+          </Button>
+          <Button asChild size="lg" variant="outline">
+            <a href={donation.paypalLink} target="_blank" rel="noreferrer">
+              Donate via PayPal
             </a>
           </Button>
         </CardContent>

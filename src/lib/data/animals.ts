@@ -152,24 +152,22 @@ export const animals: Animal[] = [
   },
 ];
 
-// Real founders: Beth Crivelli and Lynsey Clayton. Bios are placeholders —
-// see GitHub issue "Write real founder bios for Team page" — replace with
-// the actual bios and photos each of them wants shown.
+// Real founder: Beth Crivelli. Bio is a placeholder — see GitHub issue
+// "Write real founder bios for Team page" — replace with her actual bio
+// and photo.
 //
-// NOTE: double-check the spelling of "Lynsey" before launch — the GoFundMe
-// campaign page spells it this way, but confirm directly with her.
+// Lynsey Clayton was previously listed here too (she's a GoFundMe
+// co-organizer), but per direct instruction from the sanctuary
+// (2026-09-07 note): "Lynsey is not a founder, take her off the website
+// for now." Removed. Christian Crivelli is also a GoFundMe co-organizer
+// and isn't listed here yet either — pending confirmation on whether/how
+// to credit him (see GitHub issue #1 discussion).
 export const teamMembers = [
   {
     slug: "beth-crivelli",
     name: "Beth Crivelli",
     role: "Founder",
     bio: "Placeholder bio — replace with Beth's real bio.",
-  },
-  {
-    slug: "lynsey-clayton",
-    name: "Lynsey Clayton",
-    role: "Founder",
-    bio: "Placeholder bio — replace with Lynsey's real bio.",
   },
 ];
 

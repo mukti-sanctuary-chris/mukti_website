@@ -43,8 +43,11 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Mission and Vision — copy sourced from muktisanctuary.com's own
-          "Mission and Vision" section, lightly tightened. See issue #8. */}
+      {/* Mission and Vision — full copy from muktisanctuary.com's own
+          "Mission and Vision" section (both paragraphs now captured in
+          full; the first draft here had a truncated second paragraph).
+          "caretakers" replaces the real site's "guardians" deliberately —
+          see issue #12. See issue #8. */}
       <section className="mx-auto max-w-4xl px-6 py-16 text-center">
         <h2 className="font-serif text-3xl">Mission and Vision</h2>
         <div className="mt-6 flex flex-col gap-4 text-lg leading-relaxed text-muted-foreground">
@@ -58,8 +61,10 @@ export default function Home() {
           </p>
           <p>
             For people, we believe rescue and healing extend beyond
-            animals. Join us as a volunteer, a donor, or simply a visitor —
-            there&apos;s a place for you in this work too.
+            animals. We aim to be a beacon of compassion within the
+            community — offering free meals, donation-based wellness
+            events, and a safe support system for people in vulnerable or
+            abusive situations.
           </p>
         </div>
       </section>

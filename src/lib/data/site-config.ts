@@ -65,7 +65,21 @@ export const siteConfig = {
       bic: "REPLACE_ME_BIC",
       bankName: "Replace with bank name",
     },
+    // Alternate one-time donation option, requested directly by the
+    // sanctuary (2026-09-07 note) — also listed on their Linktree.
+    paypalLink: "https://www.paypal.me/MuktiSanctuary",
   },
+  // Existing press coverage, for backlinks/credibility (requested via
+  // Notion 2026-09-07). Only add entries here once the URL is verified —
+  // don't guess. Veg House Magazine and Monsoon of Random coverage were
+  // mentioned but not yet locatable; add them once we have the real links.
+  press: [
+    {
+      outlet: "Veg Club Magazine",
+      title: "First pigeon sanctuary to open in Portugal: Mukti Sanctuary",
+      href: "https://vegclubmagazine.com/article/first-pigeon-sanctuary-to-open-in-portugal-mukti-sanctuary",
+    },
+  ],
 } as const;
 
 export type SiteConfig = typeof siteConfig;
