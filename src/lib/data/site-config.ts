@@ -57,13 +57,14 @@ export const siteConfig = {
         ],
       },
     ],
-    // TODO: confirm the sanctuary's real IBAN — this is still a
-    // placeholder and should not go live as-is.
+    // Real bank transfer details, sent directly by the sanctuary via
+    // Notion (2026-09-11), as a screenshot of their bank's account
+    // confirmation letter. BESCPTPL is Novo Banco's BIC/SWIFT code.
     bank: {
-      accountName: "Mukti Sanctuary",
-      iban: "PT50 0000 0000 0000 0000 0000 0",
-      bic: "REPLACE_ME_BIC",
-      bankName: "Replace with bank name",
+      accountName: "Mukti Sanctuary Associação",
+      iban: "PT50 0007 0000 0083 8731 5502 3",
+      bic: "BESCPTPL",
+      bankName: "Novo Banco",
     },
     // Alternate one-time donation option, requested directly by the
     // sanctuary (2026-09-07 note) — also listed on their Linktree.
