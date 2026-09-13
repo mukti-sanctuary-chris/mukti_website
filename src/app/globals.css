@@ -13,7 +13,14 @@
                                  over the sage background (source is
                                  rgba(2,9,18,.75)) */
   --muted: #b7d2cf;          /* lighter sage, for muted panels */
-  --muted-foreground: #4a5c5a;
+  --muted-foreground: #3a4644; /* darkened from an earlier #4a5c5a for WCAG
+                                 2.1 AA — this color is used as body/description
+                                 text sitting directly on the plain sage
+                                 --background in several places (e.g.
+                                 SectionHeading's description line), where the
+                                 old value only hit ~3.5:1. This value clears
+                                 4.5:1 against sage, the lighter --muted panel
+                                 fill, and white alike. */
   --card: #ffffff;
   --card-foreground: #1a2530;
   --border: #7fa6a2;
@@ -21,16 +28,24 @@
   --primary: #3a6b62;        /* dark teal — real site's announcement bar */
   --primary-foreground: #ffffff;
   --secondary: #a8622f;      /* terracotta orange, sampled from the real
-                                 logo, deepened further for WCAG 2.1 AA text
-                                 contrast — the site uses this as small text
-                                 (eyebrow labels, role labels) as well as
-                                 button fills, so it needs the 4.5:1 normal-
-                                 text threshold, not just the 3:1 large-text/
-                                 UI-component one. ~4.7:1 against white. */
+                                 logo. This value is for FILLS ONLY now
+                                 (button backgrounds) — it only reaches
+                                 ~4.7:1 against solid white, and drops to
+                                 ~2.3–2.7:1 against the sage background or
+                                 the accent/muted tints those eyebrow badges
+                                 and icons actually sit on, which fails WCAG
+                                 2.1 AA. Small text and icon-on-tint usages
+                                 use --accent-foreground instead (see below),
+                                 which clears 4.5:1 (text) / 3:1 (icons)
+                                 against every background this site uses it
+                                 on: white, plain sage, the accent/20 tint,
+                                 and the muted/60 tint. */
   --secondary-foreground: #ffffff;
   --accent: #f0cba8;         /* soft tint of the same terracotta, for
                                  badges/highlights */
-  --accent-foreground: #402714;
+  --accent-foreground: #402714; /* doubles as the site's small-text/icon
+                                 "on brand-orange" color — see --secondary
+                                 comment above. */
 
   --ring: #3a6b62;
   --radius: 1rem;
@@ -58,9 +73,15 @@
   /* Body copy uses Aleo (a serif), headings use Figtree (a sans) — matches
      the real site exactly, even though that reverses the usual naming. The
      `font-serif` utility class is used throughout the codebase for
-     headings, so its value points at Figtree rather than being renamed. */
-  --font-sans: "Aleo", Georgia, "Iowan Old Style", "Palatino Linotype", serif;
-  --font-serif: "Figtree", "Segoe UI", system-ui, -apple-system, sans-serif;
+     headings, so its value points at Figtree rather than being renamed.
+     --font-aleo / --font-figtree are set by next/font/google in
+     layout.tsx (self-hosted, see the comment there); the literal family
+     names remain as a fallback for the unlikely case a font file fails to
+     load. */
+  --font-sans: var(--font-aleo), Georgia, "Iowan Old Style",
+    "Palatino Linotype", serif;
+  --font-serif: var(--font-figtree), "Segoe UI", system-ui, -apple-system,
+    sans-serif;
 }
 
 body {

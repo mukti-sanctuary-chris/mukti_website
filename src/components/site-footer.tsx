@@ -30,7 +30,7 @@ export function SiteFooter() {
         </div>
 
         <div className="flex flex-col gap-2">
-          <span className="text-xs font-semibold uppercase tracking-[0.2em] text-secondary">
+          <span className="text-xs font-semibold uppercase tracking-[0.2em] text-accent-foreground">
             Explore
           </span>
           {siteConfig.nav.map((item) => (
@@ -45,7 +45,7 @@ export function SiteFooter() {
         </div>
 
         <div className="flex flex-col gap-3">
-          <span className="text-xs font-semibold uppercase tracking-[0.2em] text-secondary">
+          <span className="text-xs font-semibold uppercase tracking-[0.2em] text-accent-foreground">
             Connect
           </span>
           <a
@@ -101,7 +101,13 @@ export function SiteFooter() {
 
       <div className="border-t border-border px-6 py-6 text-center text-xs text-muted-foreground">
         © {new Date().getFullYear()} {siteConfig.legalName}. All rights
-        reserved. Built with care in {siteConfig.country}.
+        reserved. Built with care in {siteConfig.country}. ·{" "}
+        <Link
+          href="/privacy"
+          className="underline underline-offset-2 hover:text-foreground"
+        >
+          Privacy
+        </Link>
       </div>
     </footer>
   );

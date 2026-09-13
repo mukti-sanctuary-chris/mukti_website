@@ -14,7 +14,7 @@ export default function Home() {
       <section className="relative overflow-hidden">
         <div className="mx-auto grid max-w-6xl gap-10 px-6 py-20 sm:py-28 lg:grid-cols-2 lg:items-center">
           <div className="flex flex-col gap-6">
-            <span className="w-fit rounded-full bg-accent/20 px-4 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-secondary">
+            <span className="w-fit rounded-full bg-accent/20 px-4 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-accent-foreground">
               {siteConfig.country} · Non-profit sanctuary
             </span>
             <h1 className="text-4xl leading-[1.05] sm:text-5xl lg:text-6xl">

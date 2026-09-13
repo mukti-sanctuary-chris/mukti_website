@@ -47,6 +47,11 @@ function CopyableField({ label, value }: { label: string; value: string }) {
           <Copy className="h-4 w-4" />
         )}
       </button>
+      {/* Announces the copy result to screen reader users — the icon swap
+          above is a purely visual cue otherwise (WCAG 2.1 AA 4.1.3). */}
+      <span role="status" aria-live="polite" className="sr-only">
+        {copied ? `${label} copied` : ""}
+      </span>
     </div>
   );
 }
@@ -59,7 +64,7 @@ export function DonatePanel({ className }: { className?: string }) {
       {/* Primary: the land fund */}
       <Card className="border-secondary/40 bg-secondary/5">
         <CardHeader>
-          <div className="flex items-center gap-2 text-secondary">
+          <div className="flex items-center gap-2 text-accent-foreground">
             <Home className="h-5 w-5" />
             <CardTitle>Help us buy our forever home</CardTitle>
           </div>
@@ -89,7 +94,7 @@ export function DonatePanel({ className }: { className?: string }) {
         {donation.sponsorshipTiers.map((tier) => (
           <Card key={tier.label} className="flex flex-col justify-between">
             <CardHeader>
-              <div className="flex items-center gap-2 text-secondary">
+              <div className="flex items-center gap-2 text-accent-foreground">
                 <PawPrint className="h-5 w-5" />
                 <CardTitle>{tier.label}</CardTitle>
               </div>
@@ -118,7 +123,7 @@ export function DonatePanel({ className }: { className?: string }) {
       {/* Direct bank transfer */}
       <Card className="flex flex-col justify-between">
         <CardHeader>
-          <div className="flex items-center gap-2 text-secondary">
+          <div className="flex items-center gap-2 text-accent-foreground">
             <Landmark className="h-5 w-5" />
             <CardTitle>Direct bank transfer</CardTitle>
           </div>

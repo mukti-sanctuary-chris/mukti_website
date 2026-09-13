@@ -15,6 +15,7 @@ export default function InMemoryPage() {
     <>
       <section className="mx-auto max-w-6xl px-6 pt-16 pb-4">
         <SectionHeading
+          level="h1"
           eyebrow="In memory"
           title="Remembering the animals who called this place home"
           description="Every animal who has passed through our care left a mark on the sanctuary and on us. This page is for them."

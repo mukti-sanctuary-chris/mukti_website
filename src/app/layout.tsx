@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Aleo, Figtree } from "next/font/google";
 import "./globals.css";
 
 import { SiteHeader } from "@/components/site-header";
@@ -7,10 +8,33 @@ import { siteConfig } from "@/lib/data/site-config";
 
 // Fonts: Aleo (body) + Figtree (headings) — matches the real
 // muktisanctuary.com site (captured via computed styles, see GitHub issue
-// #8). Loaded as a plain <link> rather than next/font/google so the build
-// never depends on reaching Google Fonts at build time (only the browser
-// fetches it, at runtime); globals.css has full system-font fallbacks in
-// case the request is blocked or slow.
+// #8).
+//
+// Loaded via next/font/google rather than a <link> to fonts.googleapis.com.
+// next/font downloads the font files once at BUILD time and self-hosts them
+// as static assets on our own domain — visitors' browsers never contact
+// Google's servers, so no visitor IP address is shared with Google on page
+// load. A plain Google Fonts <link> does that on every visit with no
+// consent prompt, which a 2022 Munich court ruling (and the wave of GDPR
+// claims that followed it) found unlawful. This trades a one-time
+// build-time dependency on Google Fonts being reachable for removing a
+// per-visitor privacy issue — the right trade for an EU-facing site.
+// globals.css keeps its system-font fallback stacks in case a font ever
+// fails to load.
+const aleo = Aleo({
+  subsets: ["latin"],
+  weight: ["400", "700"],
+  style: ["normal", "italic"],
+  display: "swap",
+  variable: "--font-aleo",
+});
+
+const figtree = Figtree({
+  subsets: ["latin"],
+  weight: ["400", "600", "700"],
+  display: "swap",
+  variable: "--font-figtree",
+});
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
@@ -36,19 +60,10 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="en" className="h-full antialiased">
-      <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link
-          rel="preconnect"
-          href="https://fonts.gstatic.com"
-          crossOrigin="anonymous"
-        />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Aleo:ital,wght@0,400;0,700;1,400&family=Figtree:wght@400;600;700&display=swap"
-          rel="stylesheet"
-        />
-      </head>
+    <html
+      lang="en"
+      className={`h-full antialiased ${aleo.variable} ${figtree.variable}`}
+    >
       <body className="flex min-h-full flex-col bg-background text-foreground">
         <a
           href="#main-content"

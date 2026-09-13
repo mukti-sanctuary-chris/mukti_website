@@ -44,6 +44,7 @@ export default function WaysToHelpPage() {
     <>
       <section className="mx-auto max-w-6xl px-6 pt-16 pb-4">
         <SectionHeading
+          level="h1"
           eyebrow="Can't donate right now?"
           title="There are just as many ways to help that cost nothing but time"
           description="Money isn't the only way to support the sanctuary. Here's how else you can make a difference for our animals."
@@ -55,10 +56,10 @@ export default function WaysToHelpPage() {
           {options.map((option) => (
             <Card key={option.title}>
               <CardContent className="flex flex-col gap-3 pt-6">
-                <div className="flex h-11 w-11 items-center justify-center rounded-full bg-accent/20 text-secondary">
+                <div className="flex h-11 w-11 items-center justify-center rounded-full bg-accent/20 text-accent-foreground">
                   <option.icon className="h-5 w-5" />
                 </div>
-                <h3 className="font-serif text-xl">{option.title}</h3>
+                <h2 className="font-serif text-xl">{option.title}</h2>
                 <p className="text-sm text-muted-foreground">
                   {option.description}
                 </p>
@@ -78,7 +79,7 @@ export default function WaysToHelpPage() {
 
       <section className="mx-auto max-w-6xl px-6 pb-24">
         <div className="flex flex-col items-center gap-4 rounded-2xl bg-muted/60 px-8 py-12 text-center">
-          <HandHeart className="h-8 w-8 text-secondary" />
+          <HandHeart className="h-8 w-8 text-accent-foreground" />
           <h2 className="max-w-xl font-serif text-2xl">
             Ready to give financially instead?
           </h2>

@@ -25,6 +25,7 @@ export default function TeamPage() {
     <>
       <section className="mx-auto max-w-6xl px-6 pt-16 pb-4">
         <SectionHeading
+          level="h1"
           eyebrow="Meet the team"
           title="The residents and people behind Mukti Sanctuary"
           description="From the animals who call this place home to the humans who care for them every day — this is who makes the sanctuary run."
@@ -80,7 +81,7 @@ export default function TeamPage() {
               />
               <CardContent className="flex flex-col gap-1 pt-5">
                 <h3 className="font-serif text-lg">{person.name}</h3>
-                <span className="text-xs uppercase tracking-wide text-secondary">
+                <span className="text-xs uppercase tracking-wide text-accent-foreground">
                   {person.role}
                 </span>
                 <p className="mt-1 text-sm text-muted-foreground">
