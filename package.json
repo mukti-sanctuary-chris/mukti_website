@@ -6,17 +6,23 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "sanity:migrate": "node scripts/migrate-to-sanity.mjs"
   },
   "dependencies": {
     "@radix-ui/react-slot": "^1.3.3",
+    "@sanity/client": "^8.6.1",
+    "@sanity/image-url": "^2.1.1",
+    "@sanity/vision": "^6.13.2",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "framer-motion": "^13.1.1",
     "lucide-react": "^1.33.0",
-    "next": "16.3.1",
+    "next": "^16.3.5",
+    "next-sanity": "^13.3.4",
     "react": "19.2.8",
     "react-dom": "19.2.8",
+    "sanity": "^6.13.2",
     "tailwind-merge": "^3.6.0"
   },
   "devDependencies": {
