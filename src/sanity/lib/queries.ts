@@ -12,3 +12,14 @@ export const animalsQuery = defineQuery(`
     photo
   }
 `);
+
+export const teamQuery = defineQuery(`
+  *[_type == "person"] | order(coalesce(order, 999) asc, name asc) {
+    _id,
+    name,
+    "slug": slug.current,
+    role,
+    bio,
+    photo
+  }
+`);

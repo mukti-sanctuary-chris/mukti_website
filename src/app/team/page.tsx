@@ -8,7 +8,8 @@ import { PlaceholderImage } from "@/components/placeholder-image";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { getAnimals } from "@/lib/data/get-animals";
-import { statusLabel, teamMembers, type Animal } from "@/lib/data/animals";
+import { getTeamMembers } from "@/lib/data/get-team";
+import { statusLabel, type Animal, type TeamMember } from "@/lib/data/animals";
 
 export const metadata: Metadata = {
   title: "Meet the Team",
@@ -39,8 +40,35 @@ function AnimalPhoto({ animal }: { animal: Animal }) {
   );
 }
 
+// Same idea as AnimalPhoto, for the human team: a real Sanity photo when
+// one's been uploaded, otherwise the same brand-color placeholder swatch
+// every person previously always showed.
+function PersonPhoto({ person }: { person: TeamMember }) {
+  if (person.photoUrl) {
+    return (
+      <Image
+        src={person.photoUrl}
+        alt={person.name}
+        width={400}
+        height={400}
+        className="aspect-square w-full object-cover"
+      />
+    );
+  }
+  return (
+    <PlaceholderImage
+      label={person.name}
+      color="#5c6b52"
+      className="aspect-square w-full rounded-none"
+    />
+  );
+}
+
 export default async function TeamPage() {
-  const allAnimals = await getAnimals();
+  const [allAnimals, teamMembers] = await Promise.all([
+    getAnimals(),
+    getTeamMembers(),
+  ]);
   // Setting an animal's status to "In loving memory" in Studio is what
   // moves it off this page and onto /in-memory — see README.md's "Content
   // management" section.
@@ -139,26 +167,29 @@ export default async function TeamPage() {
       {/* Human team */}
       <section className="mx-auto max-w-6xl px-6 py-12 pb-24">
         <h2 className="mb-8 font-serif text-2xl">Our human team</h2>
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {teamMembers.map((person) => (
-            <Card key={person.slug} className="overflow-hidden">
-              <PlaceholderImage
-                label={person.name}
-                color="#5c6b52"
-                className="aspect-square w-full rounded-none"
-              />
-              <CardContent className="flex flex-col gap-1 pt-5">
-                <h3 className="font-serif text-lg">{person.name}</h3>
-                <span className="text-xs uppercase tracking-wide text-accent-foreground">
-                  {person.role}
-                </span>
-                <p className="mt-1 text-sm text-muted-foreground">
-                  {person.bio}
-                </p>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
+        {teamMembers.length === 0 ? (
+          <div className="rounded-2xl border border-dashed border-border bg-muted/40 px-8 py-16 text-center text-muted-foreground">
+            No team members to show yet — add one in the Studio and
+            it&apos;ll show up here automatically.
+          </div>
+        ) : (
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {teamMembers.map((person) => (
+              <Card key={person.slug} className="overflow-hidden">
+                <PersonPhoto person={person} />
+                <CardContent className="flex flex-col gap-1 pt-5">
+                  <h3 className="font-serif text-lg">{person.name}</h3>
+                  <span className="text-xs uppercase tracking-wide text-accent-foreground">
+                    {person.role}
+                  </span>
+                  <p className="mt-1 text-sm text-muted-foreground">
+                    {person.bio}
+                  </p>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        )}
       </section>
     </>
   );

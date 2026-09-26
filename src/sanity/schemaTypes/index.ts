@@ -1,3 +1,4 @@
 import { animalType } from "./animal";
+import { personType } from "./person";
 
-export const schemaTypes = [animalType];
+export const schemaTypes = [animalType, personType];

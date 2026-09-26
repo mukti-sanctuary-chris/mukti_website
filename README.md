@@ -59,6 +59,11 @@ updates like a new rescue, a status change, or an adoption. If a status
 isn't set yet in the editor, the site quietly falls back to its last-known
 data rather than showing something broken.
 
+The same editor also has an "Our Team" list for the humans shown at the
+bottom of the Team page — name, role/title, a short bio, and a photo, with
+an optional display-order number. Adding, removing, or re-titling someone
+is a Studio edit, not a code change.
+
 ## Technical overview
 
 - **Framework**: Next.js 16 (App Router, TypeScript, Turbopack) — every
@@ -66,9 +71,9 @@ data rather than showing something broken.
 - **Styling**: Tailwind CSS v4 with hand-rolled UI primitives
   (`src/components/ui`), no third-party design-system dependency.
 - **Content**: a typed content layer (`src/lib/data/`) backed by a
-  headless CMS for the animal roster, with the CMS-editable data flowing
-  through `src/lib/data/get-animals.ts` so every page reads from one
-  place.
+  headless CMS for the animal roster and the human team roster, with the
+  CMS-editable data flowing through `src/lib/data/get-animals.ts` and
+  `src/lib/data/get-team.ts` so every page reads from one place.
 - **Payments**: GoFundMe (land-fund campaign) and Stripe Payment Links
   (monthly sponsorship tiers) — no in-house payment processing or card
   data touches this codebase.
@@ -92,13 +97,15 @@ npm run lint    # eslint
 
 ## Known gaps (tracked as GitHub issues)
 
-- **#1** — real bios for the founders (Beth & Lynsey), plus confirm the
-  spelling of "Lynsey"
+- **#1** — real bios and titles for the human team (Beth, Christian,
+  Lyndsey, Marco, Nuno) — all currently placeholder text under a generic
+  "Team member" title except Beth ("Founder")
 - **#3** — real photography to replace the placeholder image swatches
-- **#4** — the sanctuary's real bank IBAN / BIC (`site-config.ts` still
-  has placeholders)
 - **#6** — real In Memory tributes, once the sanctuary is ready to share
   them
+
+(#4, the sanctuary's real bank IBAN/BIC, is done — `site-config.ts` has
+the real details as of the 2026-09-11 Notion note.)
 
 Only close one of these issues when the underlying thing is actually
 done — if it's blocked on info only the sanctuary has, leave it open with

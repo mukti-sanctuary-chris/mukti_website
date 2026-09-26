@@ -177,23 +177,57 @@ export const animals: Animal[] = [
   },
 ];
 
-// Real founder: Beth Crivelli. Bio is a placeholder — see GitHub issue
-// "Write real founder bios for Team page" — replace with her actual bio
-// and photo.
+// Human team — same "no longer the live source of truth" caveat as
+// `animals` above: src/lib/data/get-team.ts reads the "person" document
+// type from Sanity and only falls back to this list if Sanity isn't
+// configured or briefly unreachable.
 //
-// Lynsey Clayton was previously listed here too (she's a GoFundMe
-// co-organizer), but per direct instruction from the sanctuary
-// (2026-09-07 note): "Lynsey is not a founder, take her off the website
-// for now." Removed. Christian Crivelli is also a GoFundMe co-organizer
-// and isn't listed here yet either — pending confirmation on whether/how
-// to credit him (see GitHub issue #1 discussion).
-export const teamMembers = [
+// Real founder: Beth Crivelli. Bio is a placeholder — see GitHub issue #1
+// — replace with her actual bio and photo.
+//
+// Lynsey Clayton was previously removed from this list (2026-09-07 note:
+// "Lynsey is not a founder, take her off the website for now"). Per
+// direct confirmation from Christian Crivelli (2026-09-24), that's no
+// longer the case — she's back on, alongside Christian, Marco, and Nuno,
+// all under the generic "Team member" title for now. Update titles and
+// bios as the sanctuary provides real text/photos.
+export type TeamMember = {
+  slug: string;
+  name: string;
+  role: string;
+  bio: string;
+  photoUrl?: string; // set when the person's photo came from Sanity
+};
+
+export const teamMembers: TeamMember[] = [
   {
     slug: "beth-crivelli",
     name: "Beth Crivelli",
     role: "Founder",
     bio: "Placeholder bio — replace with Beth's real bio.",
   },
+  {
+    slug: "christian-crivelli",
+    name: "Christian Crivelli",
+    role: "Team member",
+    bio: "Placeholder bio — replace with Christian's real bio.",
+  },
+  {
+    slug: "lyndsey-clayton",
+    name: "Lyndsey Clayton",
+    role: "Team member",
+    bio: "Placeholder bio — replace with Lyndsey's real bio.",
+  },
+  {
+    slug: "marco",
+    name: "Marco",
+    role: "Team member",
+    bio: "Placeholder bio — replace with Marco's real bio.",
+  },
+  {
+    slug: "nuno",
+    name: "Nuno",
+    role: "Team member",
+    bio: "Placeholder bio — replace with Nuno's real bio.",
+  },
 ];
-
-export type TeamMember = (typeof teamMembers)[number];
