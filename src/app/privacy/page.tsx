@@ -7,6 +7,9 @@ export const metadata: Metadata = {
   title: "Privacy",
   description:
     "What information this website collects, and what happens when you use it.",
+  alternates: {
+    canonical: `${siteConfig.url}/privacy`,
+  },
 };
 
 export default function PrivacyPage() {

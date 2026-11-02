@@ -10,11 +10,15 @@ import { Button } from "@/components/ui/button";
 import { getAnimals } from "@/lib/data/get-animals";
 import { getTeamMembers } from "@/lib/data/get-team";
 import { statusLabel, type Animal, type TeamMember } from "@/lib/data/animals";
+import { siteConfig } from "@/lib/data/site-config";
 
 export const metadata: Metadata = {
   title: "Meet the Team",
   description:
     "Meet the animal residents and human caretakers of Mukti Sanctuary.",
+  alternates: {
+    canonical: `${siteConfig.url}/team`,
+  },
 };
 
 // Shows an animal's real Sanity photo when it has one, falling back to the

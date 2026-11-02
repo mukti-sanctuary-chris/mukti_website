@@ -1,7 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { Check, Copy, Home, Landmark, PawPrint } from "lucide-react";
+import Script from "next/script";
+import { Check, Copy, Home, Landmark, PawPrint, Users } from "lucide-react";
 
 import { siteConfig } from "@/lib/data/site-config";
 import { Button } from "@/components/ui/button";
@@ -75,50 +76,98 @@ export function DonatePanel({ className }: { className?: string }) {
             GoFundMe.
           </CardDescription>
         </CardHeader>
-        <CardContent className="flex flex-wrap gap-3">
-          <Button asChild size="lg">
-            <a href={donation.gofundmeLink} target="_blank" rel="noreferrer">
-              Give to the land fund on GoFundMe
-            </a>
-          </Button>
+        <CardContent className="flex flex-col gap-6">
+          <div className="flex flex-wrap gap-3">
+            <Button asChild size="lg">
+              <a href={donation.gofundmeLink} target="_blank" rel="noreferrer">
+                Give to the land fund on GoFundMe
+              </a>
+            </Button>
+            <Button asChild size="lg" variant="outline">
+              <a href={donation.paypalLink} target="_blank" rel="noreferrer">
+                Donate via PayPal
+              </a>
+            </Button>
+          </div>
+
+          {/* GoFundMe's own official widget — shows the live progress bar
+              and raised amount, pulled straight from GoFundMe's own script
+              rather than a number we'd have to keep updating by hand (see
+              the comment on donation.gofundmeWidgetUrl in site-config.ts).
+              next/script with afterInteractive loads the embed script once,
+              after hydration, without blocking the rest of the page. */}
+          <div
+            className="gfm-embed mx-auto"
+            data-url={donation.gofundmeWidgetUrl}
+          />
+          <Script
+            src="https://www.gofundme.com/static/js/embed.js"
+            strategy="afterInteractive"
+          />
+        </CardContent>
+      </Card>
+
+      {/* Teaming.net — the lowest-commitment way to give: €1/month,
+          charged automatically, cancel anytime. */}
+      <Card>
+        <CardHeader>
+          <div className="flex items-center gap-2 text-accent-foreground">
+            <Users className="h-5 w-5" />
+            <CardTitle>Join our Team for €1 a month</CardTitle>
+          </div>
+          <CardDescription>
+            Teaming is the easiest way to help — just €1 a month, charged
+            automatically, cancel anytime. Small amounts from many people
+            add up fast.
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
           <Button asChild size="lg" variant="outline">
-            <a href={donation.paypalLink} target="_blank" rel="noreferrer">
-              Donate via PayPal
+            <a href={donation.teamingLink} target="_blank" rel="noreferrer">
+              Join on Teaming
             </a>
           </Button>
         </CardContent>
       </Card>
 
-      {/* Monthly sponsorship tiers */}
-      <div className="grid gap-6 md:grid-cols-2">
+      {/* Monthly sponsorship tiers — semantic list markup (ul/li) rather
+          than plain divs, so the tier names and amounts read as a proper
+          list to search engines, AI crawlers, and assistive tech. */}
+      <ul className="grid list-none gap-6 p-0 md:grid-cols-2">
         {donation.sponsorshipTiers.map((tier) => (
-          <Card key={tier.label} className="flex flex-col justify-between">
-            <CardHeader>
-              <div className="flex items-center gap-2 text-accent-foreground">
-                <PawPrint className="h-5 w-5" />
-                <CardTitle>{tier.label}</CardTitle>
-              </div>
-              <CardDescription>
-                Give monthly toward food, medical care, and daily
-                enrichment.
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="flex flex-wrap gap-2">
-              {tier.amounts.map((tierAmount) => (
-                <Button key={tierAmount.href} asChild variant="outline">
-                  <a
-                    href={tierAmount.href}
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    {tierAmount.amount}
-                  </a>
-                </Button>
-              ))}
-            </CardContent>
-          </Card>
+          <li key={tier.label}>
+            <Card className="flex h-full flex-col justify-between">
+              <CardHeader>
+                <div className="flex items-center gap-2 text-accent-foreground">
+                  <PawPrint className="h-5 w-5" />
+                  <CardTitle>{tier.label}</CardTitle>
+                </div>
+                <CardDescription>
+                  Give monthly toward food, medical care, and daily
+                  enrichment.
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <ul className="flex flex-wrap gap-2 list-none p-0">
+                  {tier.amounts.map((tierAmount) => (
+                    <li key={tierAmount.href}>
+                      <Button asChild variant="outline">
+                        <a
+                          href={tierAmount.href}
+                          target="_blank"
+                          rel="noreferrer"
+                        >
+                          {tierAmount.amount}
+                        </a>
+                      </Button>
+                    </li>
+                  ))}
+                </ul>
+              </CardContent>
+            </Card>
+          </li>
         ))}
-      </div>
+      </ul>
 
       {/* Direct bank transfer */}
       <Card className="flex flex-col justify-between">

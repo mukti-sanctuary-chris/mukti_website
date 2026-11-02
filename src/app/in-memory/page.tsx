@@ -4,11 +4,15 @@ import Image from "next/image";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { PlaceholderImage } from "@/components/placeholder-image";
 import { getAnimals } from "@/lib/data/get-animals";
+import { siteConfig } from "@/lib/data/site-config";
 
 export const metadata: Metadata = {
   title: "In Memory",
   description:
     "In loving memory of the animals who lived out their lives at Mukti Sanctuary.",
+  alternates: {
+    canonical: `${siteConfig.url}/in-memory`,
+  },
 };
 
 export default async function InMemoryPage() {

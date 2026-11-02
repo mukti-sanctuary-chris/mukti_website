@@ -18,7 +18,7 @@ export default function Home() {
               {siteConfig.country} · Non-profit sanctuary
             </span>
             <h1 className="text-4xl leading-[1.05] sm:text-5xl lg:text-6xl">
-              {siteConfig.tagline}
+              {siteConfig.name}: {siteConfig.tagline}
             </h1>
             <p className="max-w-lg text-lg leading-relaxed text-muted-foreground">
               {siteConfig.description} Every animal here has a name, a story,
@@ -75,7 +75,7 @@ export default function Home() {
           <SectionHeading
             eyebrow="Support the sanctuary"
             title="Your donation goes straight to animal care"
-            description="Help us secure permanent land, sponsor a resident monthly, or send a direct bank transfer — every option reaches the sanctuary with minimal fees."
+            description="Help us secure permanent land, join our Team for €1 a month, sponsor a resident monthly, or send a direct bank transfer — every option reaches the sanctuary with minimal fees."
             className="mb-10"
           />
           <DonatePanel />
@@ -101,7 +101,14 @@ export default function Home() {
       <section className="mx-auto max-w-6xl px-6 pb-24">
         <div className="grid gap-6 rounded-2xl bg-primary px-8 py-12 text-primary-foreground sm:grid-cols-3 sm:items-center">
           <div className="sm:col-span-2">
-            <div className="mb-3 flex items-center gap-2 text-accent">
+            {/* text-primary-foreground (white), not text-accent — the
+                accent tan tint only clears ~4.0:1 against this card's dark
+                teal bg-primary, short of the 4.5:1 WCAG 2.1 AA minimum for
+                small text. White clears ~6.1:1 here and matches the rest
+                of this card's text. See accessibility pass note on
+                --accent-foreground in globals.css for the related but
+                distinct fix on cards that sit on light backgrounds. */}
+            <div className="mb-3 flex items-center gap-2 text-primary-foreground">
               <HandHeart className="h-5 w-5" />
               <span className="text-xs font-semibold uppercase tracking-[0.2em]">
                 Can&apos;t donate right now?

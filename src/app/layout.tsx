@@ -42,6 +42,9 @@ export const metadata: Metadata = {
     template: `%s — ${siteConfig.name}`,
   },
   description: siteConfig.description,
+  alternates: {
+    canonical: siteConfig.url,
+  },
   openGraph: {
     title: siteConfig.name,
     description: siteConfig.description,
@@ -49,12 +52,47 @@ export const metadata: Metadata = {
     siteName: siteConfig.name,
     locale: "en_US",
     type: "website",
+    // Only real image asset in the repo — see public/brand/mukti-logo.png.
+    // metadataBase above resolves this to an absolute URL automatically.
+    images: [
+      {
+        url: "/brand/mukti-logo.png",
+        width: 512,
+        height: 512,
+        alt: siteConfig.name,
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: siteConfig.name,
     description: siteConfig.description,
+    images: ["/brand/mukti-logo.png"],
   },
+};
+
+// Organization structured data (schema.org JSON-LD) — lets search engines
+// and AI assistants resolve "Mukti Sanctuary" as a known entity with a
+// canonical URL, logo, and verified social profiles, instead of guessing
+// from page text alone. Every field below is sourced directly from
+// site-config.ts; nothing here is invented. Plain inline <script> rather
+// than a Next-specific helper, since this checkout is on Next 16.3.5 and
+// node_modules/next/dist/docs/ (the version-specific API docs AGENTS.md
+// points to) isn't present on this machine to confirm a newer API exists.
+const organizationJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "NGO",
+  name: siteConfig.name,
+  legalName: siteConfig.legalName,
+  url: siteConfig.url,
+  logo: `${siteConfig.url}/brand/mukti-logo.png`,
+  description: siteConfig.description,
+  email: siteConfig.email,
+  sameAs: [
+    siteConfig.social.instagram,
+    siteConfig.social.facebook,
+    siteConfig.social.youtube,
+  ],
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
@@ -64,6 +102,11 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       className={`h-full antialiased ${aleo.variable} ${figtree.variable}`}
     >
       <body className="flex min-h-full flex-col bg-background text-foreground">
+        <script
+          type="application/ld+json"
+          // eslint-disable-next-line react/no-danger -- static, trusted JSON we built above, not user input
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
+        />
         <SiteChrome>{children}</SiteChrome>
       </body>
     </html>

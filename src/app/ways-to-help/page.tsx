@@ -37,6 +37,52 @@ export const metadata: Metadata = {
   title: "Ways to Help",
   description:
     "Can't donate right now? There are plenty of ways to support Mukti Sanctuary that don't cost a thing.",
+  alternates: {
+    canonical: `${siteConfig.url}/ways-to-help`,
+  },
+};
+
+// Frequently asked questions — every answer below is a plain restatement of
+// facts already on the site (site-config.ts, the homepage, and the donate
+// panel). Nothing here is invented, so it's safe to also expose as
+// FAQPage structured data (see faqJsonLd below).
+const faqs = [
+  {
+    question: "Is Mukti Sanctuary a registered nonprofit?",
+    answer: `Yes. ${siteConfig.legalName} is a registered nonprofit association ("Associação") based in ${siteConfig.country}.`,
+  },
+  {
+    question: "Where is the sanctuary located?",
+    answer: `${siteConfig.name} currently operates out of a temporary facility in ${siteConfig.location}, while raising funds to buy permanent land in the Greater Lisbon area.`,
+  },
+  {
+    question: "What animals does Mukti Sanctuary care for?",
+    answer:
+      "The sanctuary rescues and rehabilitates dogs, cats, pigeons, and farm animals, alongside other animals in need.",
+  },
+  {
+    question: "What are the ways to donate?",
+    answer:
+      "You can give to the land fund on GoFundMe, donate via PayPal, join for €1/month on Teaming, sponsor an animal monthly, or send a direct SEPA bank transfer — see the donate section on the homepage for every option.",
+  },
+  {
+    question: "How can I help if I can't donate right now?",
+    answer:
+      "You can volunteer on-site, share the sanctuary's animal stories on social media, or donate supplies from the current wishlist — reach out by email to get involved.",
+  },
+];
+
+const faqJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: faqs.map((faq) => ({
+    "@type": "Question",
+    name: faq.question,
+    acceptedAnswer: {
+      "@type": "Answer",
+      text: faq.answer,
+    },
+  })),
 };
 
 export default function WaysToHelpPage() {
@@ -77,6 +123,22 @@ export default function WaysToHelpPage() {
         </div>
       </section>
 
+      <section className="mx-auto max-w-4xl px-6 py-12">
+        <h2 className="mb-8 text-center font-serif text-2xl">
+          Frequently asked questions
+        </h2>
+        <dl className="flex flex-col divide-y divide-border">
+          {faqs.map((faq) => (
+            <div key={faq.question} className="py-5">
+              <dt className="font-serif text-lg">{faq.question}</dt>
+              <dd className="mt-2 text-sm text-muted-foreground">
+                {faq.answer}
+              </dd>
+            </div>
+          ))}
+        </dl>
+      </section>
+
       <section className="mx-auto max-w-6xl px-6 pb-24">
         <div className="flex flex-col items-center gap-4 rounded-2xl bg-muted/60 px-8 py-12 text-center">
           <HandHeart className="h-8 w-8 text-accent-foreground" />
@@ -92,6 +154,12 @@ export default function WaysToHelpPage() {
           </Button>
         </div>
       </section>
+
+      <script
+        type="application/ld+json"
+        // eslint-disable-next-line react/no-danger -- static, trusted JSON built above from site-config facts, not user input
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
+      />
     </>
   );
 }
